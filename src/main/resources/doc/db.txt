@@ -1,0 +1,16 @@
+CREATE TABLE `board_user` (
+  `idx` int NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `regist_dt` datetime DEFAULT CURRENT_TIMESTAMP,
+  `user_nm` varchar(100) DEFAULT NULL,
+  `author_code` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`idx`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+INSERT INTO simpleboard.board_user
+(idx, user_id, password, regist_dt, user_nm, author_code)
+VALUES(1, 'ked', '$2a$10$PWBtAHEEhweQVkxZqRB6R.7WffKJ9MKhIF7olILzRwH7Xyx3KdDQG', '2022-02-09 09:41:24', '케드릭', 'USER');
+INSERT INTO simpleboard.board_user
+(idx, user_id, password, regist_dt, user_nm, author_code)
+VALUES(2, 'admin', '$2a$10$PWBtAHEEhweQVkxZqRB6R.7WffKJ9MKhIF7olILzRwH7Xyx3KdDQG', '2022-02-10 17:09:04', '관리자', 'ADMIN');
