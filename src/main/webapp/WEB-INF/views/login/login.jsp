@@ -11,13 +11,10 @@
     <title>Document</title>
 </head>
 <body>
-<c:if test="${param.error != null}">
-    ${param}
-</c:if>
 로그인 페이지
-<form:form action="/login" method="post">
-    <input type="text" name="email">
-    <input type="password" name="password">
+<form:form action="/login/auth" method="post">
+    <input type="text" name="username" placeholder="아이디">
+    <input type="password" name="password" PLACEHOLDER="비밀번호">
     <input type="submit" value="로그인">
 </form:form>
 </body>

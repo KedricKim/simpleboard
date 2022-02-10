@@ -1,21 +1,18 @@
 package com.practice.simpleboard.security;
 
-import com.practice.simpleboard.service.CustomeUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     CustomAuthenticationProvider customAuthenticationProvider;
+    @Autowired
+    CustomAuthenticationDenine customAuthenticationDenine;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
@@ -27,18 +24,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()
             // 허용하는 url
-            .antMatchers("/resources/**","/loginError","/registration").permitAll()
-            // admin 폴더에 경우 admin 권한이 있는 사용자에게만 허용
-//            .antMatchers("/admin/**").hasAuthority("ADMIN")
-            // user 폴더에 경우 user 권한이 있는 사용자에게만 허용
-//            .antMatchers("/user/**").hasAuthority("USER")
+            .antMatchers("/resources/**","/loginError").permitAll()
+            .antMatchers("/main").hasAuthority("USER") // USER 권한이 있는 사용자만 접근 허용
+            .antMatchers("/login").permitAll() // login페이지는 접근 허용
             .anyRequest().authenticated();
 
         http.formLogin()
-//            .loginPage("/login")
+            .loginPage("/login")
             .successHandler(new CustomAuthenticationSuccess()) // 로그인 성공 핸들러
             .failureHandler(new CustomAuthenticationFailure()) // 로그인 실패 핸들러
-            .permitAll();
+            .loginProcessingUrl("/login/auth");
 
 
 
@@ -49,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logoutSuccessUrl("/login");            //로그아웃 후 보내질 페이지
 
         //접근권한 없을시 페이지
-//        http.exceptionHandling().accessDeniedHandler(customAccessDenineHandler);
+        http.exceptionHandling().accessDeniedHandler(customAuthenticationDenine);
     }
 
     // 권한 처리
