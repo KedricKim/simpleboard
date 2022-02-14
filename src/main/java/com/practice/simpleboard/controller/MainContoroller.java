@@ -23,7 +23,7 @@ public class MainContoroller {
 
     @RequestMapping("/main")
     public ModelAndView notice(@AuthenticationPrincipal UserVo userVo) {
-        ModelAndView mav = new ModelAndView("main");
+        ModelAndView mav = new ModelAndView("main/main");
         mav.addObject("auth", userVo.getAuthorCode());
 
         return mav;

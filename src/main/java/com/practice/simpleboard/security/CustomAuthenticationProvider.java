@@ -25,13 +25,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String username = (String) authentication.getPrincipal();
+        String userId = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
 
-        UserVo userVo = (UserVo) userService.loadUserByUsername(username);
+        UserVo userVo = (UserVo) userService.loadUserByUsername(userId);
 
         if(!passwordEncoder.matches(password, userVo.getPassword()) ) {
-            throw new BadCredentialsException(username);
+            throw new BadCredentialsException(userId);
         }
 
         return new UsernamePasswordAuthenticationToken(userVo, password, Arrays.asList(new SimpleGrantedAuthority(userVo.getAuthorCode())));

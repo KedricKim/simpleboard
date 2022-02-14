@@ -35,8 +35,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .failureHandler(new CustomAuthenticationFailure()) // 로그인 실패 핸들러
             .loginProcessingUrl("/login/auth");
 
-
-
         //로그아웃
         http.logout()
             .invalidateHttpSession(true)
