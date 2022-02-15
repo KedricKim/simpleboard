@@ -1,7 +1,6 @@
 package com.practice.simpleboard.service;
 
 import com.practice.simpleboard.repository.UserRepository;
-import com.practice.simpleboard.vo.CustomUserDetail;
 import com.practice.simpleboard.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +16,7 @@ public class CustomeUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        UserVo member = userRepository.findByUsername(userId);
+        UserVo member = userRepository.findByUserId(userId);
         if(member==null) {
             throw new UsernameNotFoundException(userId);
         }
